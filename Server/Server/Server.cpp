@@ -18,10 +18,10 @@ void ClientHandler(HOST* host);
  */
 struct HOST {
 	SOCKET		 connection;		// connection socket.
-	size_t		 userID;			// unique user id.
-	HOST*		 next;				// the next host in the list.
-	static HOST* first;				// the first host in the list.
-	HANDLE		 threadID;			// thread id.
+	size_t		 userID;		// unique user id.
+	HOST*		 next;			// the next host in the list.
+	static HOST* 	 first;			// the first host in the list.
+	HANDLE		 threadID;		// thread id.
 	char		 userName[32];		// user name.
 };
 HOST* HOST::first = NULL;
@@ -146,8 +146,8 @@ void broadcast(char *msg, int msg_size, HOST *host) {
 	while (current) {
 		if (current->userID != host->userID) {
 			send(current->connection, host->userName, sizeof(host->userName), NULL);	// user name
-			send(current->connection, (char*)&msg_size, sizeof(int), NULL);				// message size in bytes
-			send(current->connection, msg, msg_size, NULL);								// message
+			send(current->connection, (char*)&msg_size, sizeof(int), NULL);			// message size in bytes
+			send(current->connection, msg, msg_size, NULL);					// message
 		}
 		current = current->next;
 	}
